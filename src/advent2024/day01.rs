@@ -45,13 +45,12 @@ fn solve2(input: &mut TwoVec) {
     println!("Result 2: {}", similarity);
 }
 
-pub fn solve(input_file: &String) -> std::io::Result<()> {
+pub fn solve(input_file: &String) {
     let mut input_content = String::new();
-    File::open(input_file)?.read_to_string(&mut input_content)?;
+    File::open(input_file).unwrap().read_to_string(&mut input_content).unwrap();
     let mut numbers = parse_input(input_content.as_str());
     solve1(&mut numbers);
     // my output was Result: 2375403
     solve2(&mut numbers);
     // my output was Result: 23082277
-    Ok(())
 }

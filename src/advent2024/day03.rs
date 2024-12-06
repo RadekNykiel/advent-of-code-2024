@@ -168,12 +168,11 @@ fn solve1(input_file: &str) -> (i32, i32) {
     (sum, sum_with_do)
 }
 
-pub fn solve(input_file: &String) -> std::io::Result<()> {
+pub fn solve(input_file: &String) {
     let (sum, sum_with_do) = solve1(input_file);
     assert_eq!(sum, 183788984);
     assert_eq!(sum_with_do, 62098619);
 
     println!("Answer part 1: {}", sum);
     println!("Answer part 2: {}", sum_with_do);
-    Ok(())
 }

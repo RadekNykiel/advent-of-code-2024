@@ -57,13 +57,10 @@ fn solve1(input: Vec<Vec<i32>>) {
 }
 
 
-pub fn solve(input_file: &String) -> std::io::Result<()> {
+pub fn solve(input_file: &String) {
     let mut input_content = String::new();
-    File::open(input_file)?.read_to_string(&mut input_content)?;
+    File::open(input_file).unwrap().read_to_string(&mut input_content).unwrap();
     let input = parse_input(&input_content);
     solve1(input);
     // res is 660, 689
-
-
-    Ok(())
 }

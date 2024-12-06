@@ -153,7 +153,7 @@ fn calculate(expression: &Vec<Token>, enable_do: bool) -> i32 {
     sum
 }
 
-fn solve(input_file: &str) -> (i32, i32) {
+fn solve1(input_file: &str) -> (i32, i32) {
     let mut input = String::new();
     File::open(input_file)
         .unwrap()
@@ -168,9 +168,8 @@ fn solve(input_file: &str) -> (i32, i32) {
     (sum, sum_with_do)
 }
 
-fn main() -> std::io::Result<()> {
-    let input_file = "input.txt";
-    let (sum, sum_with_do) = solve(input_file);
+pub fn solve(input_file: &String) -> std::io::Result<()> {
+    let (sum, sum_with_do) = solve1(input_file);
     assert_eq!(sum, 183788984);
     assert_eq!(sum_with_do, 62098619);
 

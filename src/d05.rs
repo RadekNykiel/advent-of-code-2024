@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::Read;
 use std::cmp::Ordering;
 
+
 type PageOrdering = HashMap<i32, Vec<i32>>;
 
 fn compare(ordering: &PageOrdering, lhs: i32, rhs: i32) -> Ordering {
@@ -15,8 +16,7 @@ fn compare(ordering: &PageOrdering, lhs: i32, rhs: i32) -> Ordering {
     return Ordering::Equal;
 }
 
-fn main() {
-    let input_file = "input.txt";
+pub fn solve(input_file: &String) {
     let mut input_content = String::new();
     File::open(input_file)
         .unwrap()
@@ -73,3 +73,4 @@ fn check_line(ordering: &PageOrdering, input: &[i32]) -> bool {
         
     return check_line(ordering, rest);
 }
+

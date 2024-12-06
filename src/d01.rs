@@ -23,7 +23,7 @@ fn parse_input(input: &str) -> TwoVec {
     (first_array, second_array)
 }
 
-fn solve(input: &mut TwoVec) {
+fn solve1(input: &mut TwoVec) {
     let (left_numbers, right_numbers) = input;
     left_numbers.sort();
     right_numbers.sort();
@@ -45,11 +45,11 @@ fn solve2(input: &mut TwoVec) {
     println!("Result 2: {}", similarity);
 }
 
-fn main() -> std::io::Result<()> {
+pub fn solve(input_file: &String) -> std::io::Result<()> {
     let mut input_content = String::new();
-    File::open("input.txt")?.read_to_string(&mut input_content)?;
+    File::open(input_file)?.read_to_string(&mut input_content)?;
     let mut numbers = parse_input(input_content.as_str());
-    solve(&mut numbers);
+    solve1(&mut numbers);
     // my output was Result: 2375403
     solve2(&mut numbers);
     // my output was Result: 23082277

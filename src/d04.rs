@@ -116,8 +116,7 @@ fn parse_input_to_arr(input_file: &str) -> Array2D {
     ret
 }
 
-fn main() {
-    let input_filename = "input.txt";
+pub fn solve(input_filename: &String) {
     let input_bytes = parse_input_to_arr(input_filename);
 
     let mut res: i16 = 0;

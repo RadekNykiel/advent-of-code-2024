@@ -50,16 +50,17 @@ fn solve1(input: Vec<Vec<i32>>) {
         if safe_with_dampener {
             safe_with_dampener_count += 1;
         }
-
     }
     println!("Safe rows: {}", safe_count);
     println!("Safe rows with dampener: {}", safe_with_dampener_count);
 }
 
-
 pub fn solve(input_file: &String) {
     let mut input_content = String::new();
-    File::open(input_file).unwrap().read_to_string(&mut input_content).unwrap();
+    File::open(input_file)
+        .unwrap()
+        .read_to_string(&mut input_content)
+        .unwrap();
     let input = parse_input(&input_content);
     solve1(input);
     // res is 660, 689

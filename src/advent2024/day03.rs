@@ -68,7 +68,6 @@ impl Parser {
             }
             self.clear_buffer();
         }
-
     }
 
     fn process_buffer_numeric(&mut self) {

@@ -111,4 +111,3 @@ pub fn get_vector_points(start: Coordinate, len: usize, d: Direction) -> Vec<Coo
 
     v
 }
-

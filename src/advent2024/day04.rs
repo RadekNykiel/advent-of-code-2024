@@ -3,7 +3,6 @@ use std::io::Read;
 
 use crate::utils2d::*;
 
-
 fn parse_input_to_arr(input_file: &str) -> Array2D {
     let mut input_content = String::new();
     File::open(input_file)
@@ -43,11 +42,11 @@ pub fn solve(input_filename: &String) {
             }
 
             if found.map(|v| v == b'A').unwrap_or_default() {
-                let diagonal_letters: Vec<Option<u8>> =  DIAGONAL_DIRECTIONS
+                let diagonal_letters: Vec<Option<u8>> = DIAGONAL_DIRECTIONS
                     .into_iter()
-                .map(|d| get_direction_vector(d) + coord)
-                .map(|v| input_bytes.get_coordinate(v))
-                .collect();
+                    .map(|d| get_direction_vector(d) + coord)
+                    .map(|v| input_bytes.get_coordinate(v))
+                    .collect();
                 match diagonal_letters[..] {
                     [Some(b'M'), Some(b'M'), Some(b'S'), Some(b'S')] => res2 += 1,
                     [Some(b'S'), Some(b'M'), Some(b'M'), Some(b'S')] => res2 += 1,

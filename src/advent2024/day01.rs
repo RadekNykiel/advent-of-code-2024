@@ -8,7 +8,6 @@ use std::io::Read;
 //here is the definition
 type TwoVec = (Vec<i32>, Vec<i32>);
 
-
 fn parse_input(input: &str) -> TwoVec {
     let mut lines = input.lines();
     let mut first_array = Vec::new();
@@ -39,7 +38,12 @@ fn solve2(input: &mut TwoVec) {
     let (left_numbers, right_numbers) = input;
     let mut similarity = 0;
     for i in left_numbers.iter() {
-        let occurences: i32 = right_numbers.iter().filter(|&x| x == i).count().try_into().unwrap();
+        let occurences: i32 = right_numbers
+            .iter()
+            .filter(|&x| x == i)
+            .count()
+            .try_into()
+            .unwrap();
         similarity += occurences * (*i);
     }
     println!("Result 2: {}", similarity);
@@ -47,7 +51,10 @@ fn solve2(input: &mut TwoVec) {
 
 pub fn solve(input_file: &String) {
     let mut input_content = String::new();
-    File::open(input_file).unwrap().read_to_string(&mut input_content).unwrap();
+    File::open(input_file)
+        .unwrap()
+        .read_to_string(&mut input_content)
+        .unwrap();
     let mut numbers = parse_input(input_content.as_str());
     solve1(&mut numbers);
     // my output was Result: 2375403

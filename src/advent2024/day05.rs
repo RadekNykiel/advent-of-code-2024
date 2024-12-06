@@ -1,17 +1,20 @@
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
-use std::cmp::Ordering;
-
 
 type PageOrdering = HashMap<i32, Vec<i32>>;
 
 fn compare(ordering: &PageOrdering, lhs: i32, rhs: i32) -> Ordering {
     if let Some(found) = ordering.get(&lhs) {
-        if found.contains(&rhs) {return Ordering::Less}
+        if found.contains(&rhs) {
+            return Ordering::Less;
+        }
     }
     if let Some(found) = ordering.get(&rhs) {
-        if found.contains(&lhs) {return Ordering::Greater}
+        if found.contains(&lhs) {
+            return Ordering::Greater;
+        }
     }
     return Ordering::Equal;
 }
@@ -35,7 +38,7 @@ pub fn solve(input_file: &String) {
         let value_int: i32 = v.parse().unwrap();
 
         if let Some(found) = ordering.get_mut(&key_int) {
-found.push(value_int);
+            found.push(value_int);
         } else {
             ordering.insert(key_int, vec![value_int]);
         }
@@ -47,11 +50,11 @@ found.push(value_int);
         let mut numbers: Vec<i32> = line.split(",").map(|el| el.parse().unwrap()).collect();
         if check_line(&ordering, &numbers[..]) {
             let middle = usize::div_ceil(numbers.len(), 2);
-            corrects_sum += numbers[middle -1 ];
+            corrects_sum += numbers[middle - 1];
         } else {
-            numbers.sort_by(|a,b| compare(&ordering, *a, *b));
+            numbers.sort_by(|a, b| compare(&ordering, *a, *b));
             let middle = usize::div_ceil(numbers.len(), 2);
-            incorr_sum += numbers[middle -1 ];
+            incorr_sum += numbers[middle - 1];
         }
     }
 
@@ -70,7 +73,6 @@ fn check_line(ordering: &PageOrdering, input: &[i32]) -> bool {
             return false;
         }
     }
-        
+
     return check_line(ordering, rest);
 }
-

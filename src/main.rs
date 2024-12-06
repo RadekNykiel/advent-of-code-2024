@@ -5,7 +5,9 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let [_, day, filename, ..] = &args[..] else { panic!("not enough args!") };
+    let [_, day, filename, ..] = &args[..] else {
+        panic!("not enough args!")
+    };
     println!("DAY: {}, FILENAME: {}", day, filename);
     match day.as_str() {
         "1" => advent2024::day01::solve(filename),
@@ -14,6 +16,6 @@ fn main() {
         "4" => advent2024::day04::solve(filename),
         "5" => advent2024::day05::solve(filename),
         "6" => advent2024::day06::solve(filename),
-        _ => panic!("No such task implemented")
+        _ => panic!("No such task implemented"),
     }
 }

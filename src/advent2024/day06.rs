@@ -1,6 +1,6 @@
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
-use std::collections::HashSet;
 
 use crate::utils2d::*;
 
@@ -10,7 +10,7 @@ fn next_dir(d: Direction) -> Direction {
         Direction::Right => Direction::Down,
         Direction::Down => Direction::Left,
         Direction::Left => Direction::Up,
-        _ => panic!("not expected other directions")
+        _ => panic!("not expected other directions"),
     }
 }
 
@@ -24,7 +24,7 @@ pub fn solve(input_file: &String) {
         .unwrap()
         .read_to_string(&mut input_content)
         .unwrap();
-    
+
     let rows = i16::try_from(input_content.lines().count()).unwrap();
     let cols = i16::try_from(input_content.lines().next().unwrap().trim().len()).unwrap();
 
@@ -36,14 +36,16 @@ pub fn solve(input_file: &String) {
     for (x, row) in input_content.lines().enumerate() {
         for (y, c) in row.chars().enumerate() {
             if c == '^' {
-                found_pos = Some(Coordinate(x.try_into().unwrap(),y.try_into().unwrap()));
+                found_pos = Some(Coordinate(x.try_into().unwrap(), y.try_into().unwrap()));
             } else if c == '#' {
                 obstacles.push(Coordinate(x.try_into().unwrap(), y.try_into().unwrap()));
             }
         }
     }
 
-    let Some(init_pos) = found_pos else { panic!("Init position not found") };
+    let Some(init_pos) = found_pos else {
+        panic!("Init position not found")
+    };
     let mut pos = init_pos.clone();
 
     while in_bounds(&pos, rows, cols) {
@@ -80,7 +82,8 @@ pub fn solve(input_file: &String) {
             pos = next_pos;
         }
     }
-    println!("There are {} places to put obstacle and loop the guard", looped);
-    
+    println!(
+        "There are {} places to put obstacle and loop the guard",
+        looped
+    );
 }
-

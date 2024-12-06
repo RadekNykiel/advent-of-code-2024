@@ -1,4 +1,4 @@
-#[derive(Clone, Copy, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Coordinate(pub i16, pub i16);
 
 impl std::ops::AddAssign for Coordinate {

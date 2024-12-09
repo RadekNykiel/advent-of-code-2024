@@ -14,10 +14,6 @@ fn next_dir(d: Direction) -> Direction {
     }
 }
 
-fn in_bounds(curr: &Coordinate, x_max: i16, y_max: i16) -> bool {
-    (0..x_max).contains(&curr.0) && (0..y_max).contains(&curr.1)
-}
-
 pub fn solve(input_file: &String) {
     let mut input_content = String::new();
     File::open(input_file)
@@ -48,7 +44,7 @@ pub fn solve(input_file: &String) {
     };
     let mut pos = init_pos.clone();
 
-    while in_bounds(&pos, rows, cols) {
+    while pos.in_bounds(rows - 1, cols - 1) {
         visited.insert(pos.to_owned());
         let mut next_pos = pos.clone() + get_direction_vector(current_direction);
         while obstacles.contains(&next_pos) {
@@ -68,7 +64,7 @@ pub fn solve(input_file: &String) {
         let mut visited_with_dir: HashSet<(Coordinate, Direction)> = HashSet::new();
         pos = init_pos.to_owned();
         current_direction = Direction::Up;
-        while in_bounds(&pos, rows, cols) {
+        while pos.in_bounds(rows - 1, cols - 1) {
             if visited_with_dir.contains(&(pos, current_direction)) {
                 looped += 1;
                 break;

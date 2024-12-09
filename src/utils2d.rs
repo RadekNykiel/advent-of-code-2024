@@ -8,11 +8,25 @@ impl std::ops::AddAssign for Coordinate {
     }
 }
 
+impl Coordinate {
+    pub fn in_bounds(&self, x_max: i16, y_max: i16) -> bool {
+        (0..=x_max).contains(&self.0) && (0..=y_max).contains(&self.1)
+    }
+}
+
 impl std::ops::Add for Coordinate {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
         Coordinate(self.0 + rhs.0, self.1 + rhs.1)
+    }
+}
+
+impl std::ops::Sub for Coordinate {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Coordinate(self.0 - rhs.0, self.1 - rhs.1)
     }
 }
 

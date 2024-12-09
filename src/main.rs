@@ -18,6 +18,7 @@ fn main() {
         "6" => advent2024::day06::solve(filename),
         "7" => advent2024::day07::solve(filename),
         "8" => advent2024::day08::solve(filename),
+        "9" => advent2024::day09::solve(filename),
         _ => panic!("No such task implemented"),
     }
 }

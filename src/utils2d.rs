@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct Coordinate(pub i16, pub i16);
 
 impl std::ops::AddAssign for Coordinate {
@@ -51,6 +51,14 @@ impl Array2D {
             return row.get(j).copied();
         }
         return None;
+    }
+
+    pub fn set(&mut self, i: usize, j: usize, val: u8) {
+        if let Some(row) = self.arr.get_mut(i) {
+            if let Some(elem) = row.get_mut(j) {
+                *elem = val;
+            }
+        }
     }
 
     pub fn get_coordinate(&self, c: Coordinate) -> Option<u8> {

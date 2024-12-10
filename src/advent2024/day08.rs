@@ -1,16 +1,8 @@
 use crate::utils2d::Coordinate;
 use itertools::Itertools;
 use std::collections::{HashMap, HashSet};
-use std::fs::File;
-use std::io::Read;
 
-pub fn solve(input_filename: &String) {
-    let mut input = String::new();
-    File::open(&input_filename)
-        .unwrap()
-        .read_to_string(&mut input)
-        .unwrap();
-
+pub fn solve(input: &String) {
     let max_x = input.lines().count() - 1;
     let max_y = input.lines().next().unwrap().chars().count() - 1;
 

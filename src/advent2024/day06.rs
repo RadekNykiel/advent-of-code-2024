@@ -1,6 +1,4 @@
 use std::collections::HashSet;
-use std::fs::File;
-use std::io::Read;
 
 use crate::utils2d::*;
 
@@ -14,22 +12,16 @@ fn next_dir(d: Direction) -> Direction {
     }
 }
 
-pub fn solve(input_file: &String) {
-    let mut input_content = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input_content)
-        .unwrap();
-
-    let rows = i16::try_from(input_content.lines().count()).unwrap();
-    let cols = i16::try_from(input_content.lines().next().unwrap().trim().len()).unwrap();
+pub fn solve(input: &String) {
+    let rows = i16::try_from(input.lines().count()).unwrap();
+    let cols = i16::try_from(input.lines().next().unwrap().trim().len()).unwrap();
 
     let mut found_pos = None;
     let mut obstacles: Vec<Coordinate> = Vec::new();
     let mut current_direction = Direction::Up;
     let mut visited: HashSet<Coordinate> = HashSet::new();
 
-    for (x, row) in input_content.lines().enumerate() {
+    for (x, row) in input.lines().enumerate() {
         for (y, c) in row.chars().enumerate() {
             if c == '^' {
                 found_pos = Some(Coordinate(x.try_into().unwrap(), y.try_into().unwrap()));

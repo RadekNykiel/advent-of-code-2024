@@ -1,8 +1,5 @@
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::Read;
-
 type PageOrdering = HashMap<i32, Vec<i32>>;
 
 fn compare(ordering: &PageOrdering, lhs: i32, rhs: i32) -> Ordering {
@@ -19,14 +16,8 @@ fn compare(ordering: &PageOrdering, lhs: i32, rhs: i32) -> Ordering {
     return Ordering::Equal;
 }
 
-pub fn solve(input_file: &String) {
-    let mut input_content = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input_content)
-        .unwrap();
-
-    let mut it = input_content.lines();
+pub fn solve(input: &String) {
+    let mut it = input.lines();
 
     let mut ordering: PageOrdering = HashMap::new();
 

@@ -1,6 +1,3 @@
-use std::fs::File;
-use std::io::Read;
-
 fn parse_input(input: &str) -> Vec<Vec<i32>> {
     let mut result = Vec::new();
     let mut it = input.lines();
@@ -55,13 +52,8 @@ fn solve1(input: Vec<Vec<i32>>) {
     println!("Safe rows with dampener: {}", safe_with_dampener_count);
 }
 
-pub fn solve(input_file: &String) {
-    let mut input_content = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input_content)
-        .unwrap();
-    let input = parse_input(&input_content);
+pub fn solve(input: &String) {
+    let input = parse_input(&input);
     solve1(input);
     // res is 660, 689
 }

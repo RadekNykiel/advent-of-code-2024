@@ -1,6 +1,4 @@
 use itertools::{izip, Itertools};
-use std::fs::File;
-use std::io::Read;
 
 #[derive(Debug, Clone)]
 enum Operation {
@@ -51,13 +49,7 @@ impl Equation {
     }
 }
 
-pub fn solve(input_filename: &String) {
-    let mut input = String::new();
-    File::open(input_filename)
-        .unwrap()
-        .read_to_string(&mut input)
-        .unwrap();
-
+pub fn solve(input: &String) {
     let mut task_equations: Vec<Equation> = Vec::new();
     for l in input.lines() {
         let (expected_string, numbers_string) = l.split_once(":").unwrap();

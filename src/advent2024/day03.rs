@@ -1,9 +1,6 @@
 // Advent of Code: 2024 day 3
 // task: https://adventofcode.com/2024/day/3
 
-use std::fs::File;
-use std::io::Read;
-
 #[derive(Debug, Clone)]
 enum Token {
     #[allow(dead_code)]
@@ -152,12 +149,7 @@ fn calculate(expression: &Vec<Token>, enable_do: bool) -> i32 {
     sum
 }
 
-fn solve1(input_file: &str) -> (i32, i32) {
-    let mut input = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input)
-        .unwrap();
+fn solve1(input: &String) -> (i32, i32) {
     let mut parser = Parser::new();
 
     let expression = parser.parse(&input);
@@ -167,8 +159,8 @@ fn solve1(input_file: &str) -> (i32, i32) {
     (sum, sum_with_do)
 }
 
-pub fn solve(input_file: &String) {
-    let (sum, sum_with_do) = solve1(input_file);
+pub fn solve(input: &String) {
+    let (sum, sum_with_do) = solve1(&input);
     assert_eq!(sum, 183788984);
     assert_eq!(sum_with_do, 62098619);
 

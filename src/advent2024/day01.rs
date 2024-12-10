@@ -1,14 +1,9 @@
 // Code for day 1 of advent of code 2024
 // https://adventofcode.com/2024/day/1
 
-use std::fs::File;
-use std::io::Read;
-
-// i want to define a type that is tuple of two vectors of i32
-//here is the definition
 type TwoVec = (Vec<i32>, Vec<i32>);
 
-fn parse_input(input: &str) -> TwoVec {
+fn parse_input(input: &String) -> TwoVec {
     let mut lines = input.lines();
     let mut first_array = Vec::new();
     let mut second_array = Vec::new();
@@ -49,13 +44,8 @@ fn solve2(input: &mut TwoVec) {
     println!("Result 2: {}", similarity);
 }
 
-pub fn solve(input_file: &String) {
-    let mut input_content = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input_content)
-        .unwrap();
-    let mut numbers = parse_input(input_content.as_str());
+pub fn solve(input: &String) {
+    let mut numbers = parse_input(&input);
     solve1(&mut numbers);
     // my output was Result: 2375403
     solve2(&mut numbers);

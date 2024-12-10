@@ -1,26 +1,18 @@
-use std::fs::File;
-use std::io::Read;
-
 use crate::utils2d::*;
 
-fn parse_input_to_arr(input_file: &str) -> Array2D {
-    let mut input_content = String::new();
-    File::open(input_file)
-        .unwrap()
-        .read_to_string(&mut input_content)
-        .unwrap();
-    let rows = input_content.lines().count();
-    let cols = input_content.lines().next().unwrap().len();
+fn parse_input_to_arr(input: &String) -> Array2D {
+    let rows = input.lines().count();
+    let cols = input.lines().next().unwrap().len();
     let mut ret = Array2D::new(rows, cols);
-    for (i, row) in input_content.lines().enumerate() {
+    for (i, row) in input.lines().enumerate() {
         ret.arr[i] = row.try_into().unwrap();
     }
 
     ret
 }
 
-pub fn solve(input_filename: &String) {
-    let input_bytes = parse_input_to_arr(input_filename);
+pub fn solve(input: &String) {
+    let input_bytes = parse_input_to_arr(&input);
 
     let mut res: i16 = 0;
     let mut res2: i16 = 0;

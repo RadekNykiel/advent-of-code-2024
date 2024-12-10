@@ -1,6 +1,3 @@
-use std::fs::File;
-use std::io::Read;
-
 #[derive(Clone, PartialEq, Eq)]
 enum Block {
     FILE(usize),
@@ -106,13 +103,7 @@ fn checksum(blocks: &Vec<Block>) -> usize {
     })
 }
 
-pub fn solve(input_file: &String) {
-    let mut input = String::new();
-    File::open(&input_file)
-        .unwrap()
-        .read_to_string(&mut input)
-        .unwrap();
-
+pub fn solve(input: &String) {
     let mut next_is_file = true;
     let mut blocks: Vec<Block> = Vec::new();
     let mut next_file_id: usize = 0;

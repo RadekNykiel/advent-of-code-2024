@@ -9,6 +9,7 @@ pub fn solve(input: &String) {
 
     let mut current_region_id = 1;
     let mut score = 0;
+    let mut score_part2 = 0;
     let mut region_map: HashMap<i32, Vec<(usize, usize)>> = HashMap::new();
 
     let rows = plant_map.len();
@@ -23,10 +24,10 @@ pub fn solve(input: &String) {
             if iter_node_region == 0 {
                 let type_to_find = iter_node_type;
                 let mut curr_region_area = 0;
-                let mut curr_region_border = 0;
 
                 let mut to_process: Vec<(usize, usize)> = vec![(iter_x, iter_y)];
                 let mut visited: HashSet<(usize, usize)> = HashSet::new();
+                let mut edges: Vec<(Direction, i32, i32)> = Vec::new();
                 visited.insert((iter_x, iter_y));
 
                 region_map.insert(current_region_id, vec![]);
@@ -43,17 +44,33 @@ pub fn solve(input: &String) {
                         .and_then(|row| row.get_mut(next_to_process_coord.1))
                     {
                         n.1 = current_region_id;
-                        curr_region_border += 4;
                     }
 
-                    for Coordinate(del_x, del_y) in
-                        STRAIGHT_DIRECTIONS.iter().map(|d| get_direction_vector(*d))
+                    for (curr_dir, Coordinate(del_x, del_y)) in STRAIGHT_DIRECTIONS
+                        .iter()
+                        .map(|d| (d, get_direction_vector(*d)))
                     {
                         let to_check_x: i32 =
                             i32::try_from(next_to_process_coord.0).unwrap() + i32::from(del_x);
                         let to_check_y: i32 =
                             i32::try_from(next_to_process_coord.1).unwrap() + i32::from(del_y);
                         if to_check_x < 0 || to_check_y < 0 {
+                            // to check is out of bounds
+                            let is_border_vertical =
+                                *curr_dir == Direction::Left || *curr_dir == Direction::Right;
+                            let bord_common = i32::try_from(if is_border_vertical {
+                                next_to_process_coord.1
+                            } else {
+                                next_to_process_coord.0
+                            })
+                            .unwrap();
+                            let bord_distinct = i32::try_from(if is_border_vertical {
+                                next_to_process_coord.0
+                            } else {
+                                next_to_process_coord.1
+                            })
+                            .unwrap();
+                            edges.push((*curr_dir, bord_common, bord_distinct));
                             continue;
                         }
                         let to_check_x_u: usize = to_check_x.try_into().unwrap();
@@ -61,26 +78,57 @@ pub fn solve(input: &String) {
                         if let Some(n) = plant_map
                             .get(to_check_x_u)
                             .and_then(|row| row.get(to_check_y_u))
+                            .filter(|n| n.0 == type_to_find)
                         {
-                            if n.0 == type_to_find {
-                                let x = (
-                                    to_check_x.try_into().unwrap(),
-                                    to_check_y.try_into().unwrap(),
-                                );
-                                curr_region_border -= 1;
-                                if n.1 == 0 && !visited.contains(&x) {
-                                    to_process.push(x);
-                                    visited.insert(x);
-                                }
+                            // to check has same type
+                            let x = (
+                                to_check_x.try_into().unwrap(),
+                                to_check_y.try_into().unwrap(),
+                            );
+
+                            if n.1 == 0 && !visited.contains(&x) {
+                                to_process.push(x);
+                                visited.insert(x);
                             }
+                        } else {
+                            //to check has different type
+                            let is_border_vertical =
+                                *curr_dir == Direction::Left || *curr_dir == Direction::Right;
+                            let bord_common = i32::try_from(if is_border_vertical {
+                                next_to_process_coord.1
+                            } else {
+                                next_to_process_coord.0
+                            })
+                            .unwrap();
+                            let bord_distinct = i32::try_from(if is_border_vertical {
+                                next_to_process_coord.0
+                            } else {
+                                next_to_process_coord.1
+                            })
+                            .unwrap();
+                            edges.push((*curr_dir, bord_common, bord_distinct));
                         }
                     }
                 }
+
                 current_region_id += 1;
-                score += curr_region_area * curr_region_border;
+                edges.sort();
+                let mut edges_joined: Vec<(Direction, i32, Vec<i32>)> = Vec::new();
+                for curr_edge in &edges[..] {
+                    if let Some(same_edge) = edges_joined.iter_mut().find(|e| {
+                        e.0 == curr_edge.0 && e.1 == curr_edge.1 && e.2.contains(&(curr_edge.2 - 1))
+                    }) {
+                        same_edge.2.push(curr_edge.2);
+                    } else {
+                        edges_joined.push((curr_edge.0, curr_edge.1, vec![curr_edge.2]));
+                    }
+                }
+                score += curr_region_area * edges.len();
+                score_part2 += curr_region_area * edges_joined.len();
             }
         }
     }
 
     println!("Score: {}", score);
+    println!("Score part 2: {}", score_part2);
 }

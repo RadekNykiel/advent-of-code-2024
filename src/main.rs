@@ -25,6 +25,7 @@ fn main() {
         "11" => advent2024::day11::solve(&input),
         "12" => advent2024::day12::solve(&input),
         "13" => advent2024::day13::solve(&input),
+        "14" => advent2024::day14::solve(&input),
         _ => panic!("No such task implemented"),
     }
 }

@@ -10,11 +10,11 @@ const HALF_HEIGHT_PLUS: i32 = HALF_HEIGHT + 1;
 #[allow(non_contiguous_range_endpoints)]
 fn get_quadrant(x: i32, y: i32) -> usize {
     let quad = match (x, y) {
-        (0..HALF_WIDTH,         0..HALF_HEIGHT)         => 1,
-        (HALF_WIDTH_PLUS..WIDTH,   0..HALF_HEIGHT)         => 2,
-        (HALF_WIDTH_PLUS..WIDTH,   HALF_HEIGHT_PLUS..HEIGHT)  => 3,
-        (0..HALF_WIDTH,         HALF_HEIGHT_PLUS..HEIGHT)  => 4,
-        _                                               => 0,
+        (0..HALF_WIDTH, 0..HALF_HEIGHT) => 1,
+        (HALF_WIDTH_PLUS..WIDTH, 0..HALF_HEIGHT) => 2,
+        (HALF_WIDTH_PLUS..WIDTH, HALF_HEIGHT_PLUS..HEIGHT) => 3,
+        (0..HALF_WIDTH, HALF_HEIGHT_PLUS..HEIGHT) => 4,
+        _ => 0,
     };
     return quad;
 }
@@ -60,30 +60,46 @@ fn print_robots_position(robots: &Vec<Robot>, time: i32) {
     }
     for y in 0..HEIGHT {
         for x in 0..WIDTH {
-            print!("{}", if my_array[x as usize][y as usize] != 0 { my_array[x as usize][y as usize].to_string() } else { ".".to_string() });
+            print!(
+                "{}",
+                if my_array[x as usize][y as usize] != 0 {
+                    my_array[x as usize][y as usize].to_string()
+                } else {
+                    ".".to_string()
+                }
+            );
         }
         print!("\n");
     }
 }
 
-
 pub fn solve(input: &String) {
     let mut robots: Vec<Robot> = vec![];
     for line in input.lines() {
-        let v: Vec<i32> = line.trim().replace("p=", "").replace("v=", "").replace(" ", ",").split(',').map(|s| s.parse::<i32>().unwrap()).collect();
+        let v: Vec<i32> = line
+            .trim()
+            .replace("p=", "")
+            .replace("v=", "")
+            .replace(" ", ",")
+            .split(',')
+            .map(|s| s.parse::<i32>().unwrap())
+            .collect();
         let [px, py, vx, vy] = v[..] else { panic!() };
         let robot = Robot::new(px, py, vx, vy);
         robots.push(robot);
-
     }
 
-    let mut quadrants_count = vec![0,0,0,0,0];
+    let mut quadrants_count = vec![0, 0, 0, 0, 0];
     for robot in &robots[..] {
         let (final_x, final_y) = robot.get_pos_after_time(SIMULATION_TIME);
         let quadrant = get_quadrant(final_x, final_y);
         quadrants_count[quadrant] += 1;
     }
-    let score = &quadrants_count[1..].iter().copied().reduce(|acc, curr| acc * curr).unwrap();
+    let score = &quadrants_count[1..]
+        .iter()
+        .copied()
+        .reduce(|acc, curr| acc * curr)
+        .unwrap();
     println!("Part 1 score: {}", score);
 
     /*
@@ -96,7 +112,7 @@ pub fn solve(input: &String) {
 
     let mut res2 = 0;
     let mut found = false;
-    for i in 1..{
+    for i in 1.. {
         if found == true {
             break;
         }
@@ -113,14 +129,21 @@ pub fn solve(input: &String) {
          * _###_
          * #####
          */
-        for y in 0..(HEIGHT-2) {
-            for x in 2..(WIDTH-2) {
+        for y in 0..(HEIGHT - 2) {
+            for x in 2..(WIDTH - 2) {
                 let xu = x as usize;
                 let yu = y as usize;
-                
-                if my_array[xu][yu] > 0 
-                    && my_array[xu+1][yu+1] > 0 && my_array[xu][yu+1] > 0 && my_array[xu-1][yu+1] > 0 
-                    && my_array[xu-2][yu+2] > 0 && my_array[xu-1][yu+2] > 0 && my_array[xu][yu+2] > 0 && my_array[xu+1][yu+2] > 0 && my_array[xu+2][yu+2]> 0 {
+
+                if my_array[xu][yu] > 0
+                    && my_array[xu + 1][yu + 1] > 0
+                    && my_array[xu][yu + 1] > 0
+                    && my_array[xu - 1][yu + 1] > 0
+                    && my_array[xu - 2][yu + 2] > 0
+                    && my_array[xu - 1][yu + 2] > 0
+                    && my_array[xu][yu + 2] > 0
+                    && my_array[xu + 1][yu + 2] > 0
+                    && my_array[xu + 2][yu + 2] > 0
+                {
                     found = true;
                     res2 = i;
                 }

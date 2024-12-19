@@ -26,6 +26,17 @@ fn main() {
         "12" => advent2024::day12::solve(&input),
         "13" => advent2024::day13::solve(&input),
         "14" => advent2024::day14::solve(&input),
+        "15" => advent2024::day15::solve(&input),
+        "16" => advent2024::day16::solve(&input),
+        "17" => advent2024::day17::solve(&input),
+        "18" => advent2024::day18::solve(&input),
+        "19" => advent2024::day19::solve(&input),
+        "20" => advent2024::day20::solve(&input),
+        "21" => advent2024::day21::solve(&input),
+        "22" => advent2024::day22::solve(&input),
+        "23" => advent2024::day23::solve(&input),
+        "24" => advent2024::day24::solve(&input),
+        "25" => advent2024::day25::solve(&input),
         _ => panic!("No such task implemented"),
     }
 }
